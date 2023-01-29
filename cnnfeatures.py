@@ -124,8 +124,8 @@ class Generate_Dataset:
             video_capture.release()
             print("hello brother")
             l=list(video_feat)
-            print(l)
-            print(type(l))
+            l1=np.array(l)
+            print(l1[0])
 
 
         

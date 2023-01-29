@@ -2,6 +2,7 @@ import torch.nn as nn
 from torchvision import transforms, models
 from torch.autograd import Variable
 
+
 """
 pre-trained ResNet
 """
@@ -34,7 +35,10 @@ class ResNet(nn.Module):
         
 
         module_list = list(resnet.children())
+        # print(module_list)
         self.conv5 = nn.Sequential(*module_list[: -2])
+        print("*************************")
+        print(self.conv5)
         self.pool5 = module_list[-2]
 
     # rescale and normalize image, then pass it through ResNet
@@ -42,8 +46,11 @@ class ResNet(nn.Module):
         x = self.transform(x)
         x = x.unsqueeze(0)  # reshape the single image s.t. it has a batch dim
         x = Variable(x).cpu()
+        # print(x.shape)
         res_conv5 = self.conv5(x)
+        # print(res_conv5.shape)
         res_pool5 = self.pool5(res_conv5)
+        # print(res_pool5.shape)
         res_pool5 = res_pool5.view(res_pool5.size(0), -1)
 
         return res_pool5
